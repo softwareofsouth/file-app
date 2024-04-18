@@ -1,20 +1,39 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
+import axios from 'axios';
 
-import PostFiles from "./pages/PostFiles";
-import GetFiles from "./pages/GetFiles";
+function App() {
+  const [file, setFile] = useState(null);
+  const [filePath, setFilePath] = useState(null);
 
-const App = () => {
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleUpload = async () => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await axios.post('http://localhost:3001/upload', formData);
+      setFilePath(response.data.path);
+    } catch (error) {
+      console.error('Error uploading file: ', error);
+    }
+  };
+
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route path="/upload" element={<PostFiles />} />
-          <Route path="/" element={<GetFiles />} />
-        </Routes>
-      </Router>
-    </>
+    <div>
+      <h1>File Upload</h1>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleUpload}>Upload</button>
+      {filePath && (
+        <div>
+          <h2>Uploaded File</h2>
+          <img src={`http://localhost:3001/${filePath}`} alt="Uploaded File" />
+        </div>
+      )}
+    </div>
   );
-};
+}
 
 export default App;
