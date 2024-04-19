@@ -1,36 +1,66 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const postModel = require('./models/post.model');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const multer = require("multer");
+const fs = require("fs");
+const path = require("path");
+const mongoose = require("mongoose");
+
+const connection = require("./database/connection");
 
 const app = express();
-const port = 3001;
+app.use(express.json());
+app.use(cors());
+const PORT = process.env.PORT || 5000;
 
-// Set storage engine
-const storage = multer.diskStorage({
-  destination: './uploads/',
-  filename: function(req, file, cb) {
-    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
-  }
-});
-
-// Initialize upload
-const upload = multer({
-  storage: storage
-}).single('file'); // 'file' should match the name attribute in your form
-
-app.post('/upload', (req, res) => {
-  upload(req, res, (err) => {
-    if (err) {
-      console.error(err);
-      res.sendStatus(500);
-    } else {
-      console.log(req.file);
-      res.sendStatus(200);
-    }
+connection
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((err) => {
+    console.log("Error connecting to the database", err);
   });
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadDir = "uploads/";
+    fs.mkdirSync(uploadDir, { recursive: true });
+    cb(null, uploadDir);
+  },
+  filename: (req, file, cb) => {
+    const ext = path.extname(file.originalname);
+    cb(null, file.fieldname + '-' + Date.now() + ext);
+  },
 });
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
+const upload = multer({ storage });
+
+const FileSchema = new mongoose.Schema({
+  author: String,
+  text: String,
+  filename: String,
+  path: String,
+  contentType: String,
+});
+
+const File = mongoose.model("File", FileSchema);
+
+app.post("/upload", upload.single("file"), async (req, res) => {
+  const { author, text } = req.body;
+  const file = req.file;
+
+  const newFile = new File({
+    author,
+    text,
+    filename: file.filename,
+    path: file.path,
+    contentType: file.mimetype,
+  });
+
+  await newFile.save();
+  res.send("File uploaded successfully");
+});
+
+app.listen(PORT, () => {
+  console.log("Server is running on port 5000");
 });
