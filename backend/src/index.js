@@ -1,23 +1,36 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
-require("dotenv").config();
-
-const UploadRoute = require("./routes/UploadRoute");
+const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const postModel = require('./models/post.model');
 
 const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.static("public"));
+const port = 3001;
 
-const PORT = process.env.PORT || 5000;
-
-mongoose.connect(process.env.MONGO_URI, () => {
-  console.log("MonoDB Connected...");
+// Set storage engine
+const storage = multer.diskStorage({
+  destination: './uploads/',
+  filename: function(req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname));
+  }
 });
 
-app.use(UploadRoute);
+// Initialize upload
+const upload = multer({
+  storage: storage
+}).single('file'); // 'file' should match the name attribute in your form
 
-app.listen(PORT, () => {
-  console.log(`Server started at port: ${PORT}`);
+app.post('/upload', (req, res) => {
+  upload(req, res, (err) => {
+    if (err) {
+      console.error(err);
+      res.sendStatus(500);
+    } else {
+      console.log(req.file);
+      res.sendStatus(200);
+    }
+  });
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
 });
