@@ -5,6 +5,8 @@ import UploadForm from "./pages/UploadForm";
 import FileList from "./pages/FileList";
 import Navigation from "./components/Navigation";
 
+import "./app.css";
+
 function App() {
   return (
     <Router>

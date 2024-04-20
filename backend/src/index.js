@@ -17,6 +17,7 @@ app.use(
   })
 );
 const PORT = process.env.PORT;
+const HOST = process.env.HOST;
 
 connection
   .then(() => {
@@ -50,6 +51,8 @@ const FileSchema = new mongoose.Schema({
 
 const File = mongoose.model("File", FileSchema);
 
+app.use("/uploads", express.static("uploads"));
+
 app.post("/upload", upload.single("file"), async (req, res) => {
   const { author, text } = req.body;
   const file = req.file;
@@ -65,27 +68,26 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     contentType: file.mimetype,
   });
 
-  app.use('/uploads', express.static('uploads'));
-
   await newFile.save();
   console.log("File uploaded successfully \n", newFile);
   res.send("File uploaded successfully");
 });
 
-app.get('/files', async (req, res) => {
+app.get("/files", async (req, res) => {
   try {
     const files = await File.find();
     res.json(files);
   } catch (err) {
-    console.error('Error fetching files:', err);
-    res.status(500).json({ message: 'Internal server error' });
+    console.error("Error fetching files:", err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
+
 // index page, hello world
 app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, HOST, () => {
   console.log("Server is running on port 5000");
 });

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Notification, Input, Button, FlexboxGrid, Divider } from "rsuite";
 
 const UploadForm = () => {
@@ -25,7 +25,7 @@ const UploadForm = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/upload", formData, {
+      await api.post("/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
@@ -71,7 +71,7 @@ const UploadForm = () => {
           </div>
           <br />
           <div style={{ textAlign: "center" }}>
-            <Button appearance="primary" type="submit">
+            <Button appearance="primary" color="green" type="submit" block>
               Subir
             </Button>
           </div>

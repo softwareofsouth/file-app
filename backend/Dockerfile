@@ -1,5 +1,5 @@
-# Use the official Node.js 18.20.1 image as base
-FROM node:18.20.1
+# Use the official Node.js 18 image as the base image
+FROM node:18-alpine
 # Set the working directory in the container
 WORKDIR /app
 # Copy the package.json file into the container at /backend

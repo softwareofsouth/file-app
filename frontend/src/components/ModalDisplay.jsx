@@ -12,12 +12,14 @@ const ModalDisplay = ({ text, img, author, type }) => {
   return (
     <>
       <ButtonToolbar>
-        <Button onClick={() => handleOpen("full")}>Abrir</Button>
+        <Button color="green" appearance="primary" style={{margin:"1px"}} onClick={() => handleOpen("full")}>
+          Abrir
+        </Button>
       </ButtonToolbar>
 
       <Modal size={"full"} open={open} onClose={handleClose}>
         <Modal.Header>
-"          <Modal.Title style={{ textAlign: "center" }}>"{text}"</Modal.Title>
+          " <Modal.Title style={{ textAlign: "center" }}>"{text}"</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div

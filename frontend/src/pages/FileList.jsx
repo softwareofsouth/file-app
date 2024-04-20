@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Grid, Row, Col, Panel } from "rsuite";
 
 import ModalDisplay from "../components/ModalDisplay";
+const URI = `http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}`;
 
 const FileList = () => {
   const [files, setFiles] = useState([]);
@@ -10,7 +11,7 @@ const FileList = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/files");
+        const response = await api.get("/files");
         setFiles(response.data);
       } catch (error) {
         console.error("Error fetching files:", error);
@@ -25,12 +26,12 @@ const FileList = () => {
   }, []);
 
   const renderFile = (file) => {
-    const commonStyle = { maxWidth: "150px" };
+    const commonStyle = { maxWidth: "150px", borderRadius: "5px" };
 
     if (file.contentType.startsWith("image")) {
       return (
         <img
-          src={`http://localhost:5000/uploads/${file.filename}`}
+          src={`${URI}/uploads/${file.filename}`}
           alt="Uploaded file"
           style={commonStyle}
         />
@@ -39,7 +40,7 @@ const FileList = () => {
       return (
         <video controls style={commonStyle}>
           <source
-            src={`http://localhost:5000/uploads/${file.filename}`}
+            src={`${URI}/uploads/${file.filename}`}
             type={file.contentType}
           />
           Your browser does not support the video tag.
@@ -68,7 +69,7 @@ const FileList = () => {
               <div>{renderFile(file)}</div>
               <ModalDisplay
                 text={file.text}
-                img={`http://localhost:5000/uploads/${file.filename}`}
+                img={`${URI}/uploads/${file.filename}`}
                 author={file.author}
                 type={
                   file.filename.split(".").pop() === "mp4" ? "video" : "photo"
