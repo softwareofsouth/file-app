@@ -16,7 +16,7 @@ app.use(
     credentials: true,
   })
 );
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
 connection
   .then(() => {
@@ -53,6 +53,9 @@ const File = mongoose.model("File", FileSchema);
 app.post("/upload", upload.single("file"), async (req, res) => {
   const { author, text } = req.body;
   const file = req.file;
+  if (!file) {
+    return res.status(400).send("Please upload a file");
+  }
 
   const newFile = new File({
     author,
@@ -77,6 +80,10 @@ app.get('/files', async (req, res) => {
     console.error('Error fetching files:', err);
     res.status(500).json({ message: 'Internal server error' });
   }
+});
+// index page, hello world
+app.get("/", (req, res) => {
+  res.send("Hello World");
 });
 
 app.listen(PORT, () => {

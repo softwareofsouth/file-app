@@ -13,9 +13,28 @@ const FileList = () => {
         console.error('Error fetching files:', error);
       }
     };
-
+  
     fetchFiles();
+    const intervalId = setInterval(fetchFiles, 10000); // time to fetch
+  
+    // Clean up function
+    return () => clearInterval(intervalId);
   }, []);
+
+  const renderFile = (file) => {
+    if (file.contentType.startsWith('image')) {
+      return <img src={`http://localhost:5000/uploads/${file.filename}`} alt="Uploaded file" style={{ maxWidth: '100px' }} />;
+    } else if (file.contentType.startsWith('video')) {
+      return (
+        <video controls style={{ maxWidth: '500px' }}>
+          <source src={`http://localhost:5000/uploads/${file.filename}`} type={file.contentType} />
+          Your browser does not support the video tag.
+        </video>
+      );
+    } else {
+      return <p>Unsupported file format</p>;
+    }
+  };
 
   return (
     <div>
@@ -27,7 +46,8 @@ const FileList = () => {
             <strong>Text:</strong> {file.text}<br />
             <strong>Filename:</strong> {file.filename}<br />
             <strong>Content Type:</strong> {file.contentType}<br />
-            <img src={`http://localhost:5000/uploads/${file.filename}`} alt="Uploaded file" style={{ maxWidth: '100px' }} />
+            {renderFile(file)}
+
           </li>
         ))}
       </ul>
@@ -36,3 +56,5 @@ const FileList = () => {
 };
 
 export default FileList;
+
+//             <img src={`http://localhost:5000/uploads/${file.filename}`} alt="Uploaded file" style={{ maxWidth: '100px' }} />

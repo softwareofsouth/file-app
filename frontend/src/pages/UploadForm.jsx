@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import { Notification } from 'rsuite';
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [author, setAuthor] = useState('');
   const [text, setText] = useState('');
+  const [uploadStatus, setUploadStatus] = useState(null);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -24,8 +26,10 @@ const UploadForm = () => {
         },
       });
       console.log('File uploaded successfully');
+      setUploadStatus('success');
     } catch (err) {
       console.error('Error uploading file:', err);
+      setUploadStatus('error');
     }
   };
 
@@ -38,6 +42,8 @@ const UploadForm = () => {
         <input type="file" onChange={handleFileChange} />
         <button type="submit">Upload</button>
       </form>
+      {uploadStatus === 'success' && <Notification type="success" header="Operacion con Exito">Informacion enviada</Notification>}
+      {uploadStatus === 'error' && <Notification type="error" header="Operacion fallida">Error al cargar</Notification>}
     </div>
   );
 };

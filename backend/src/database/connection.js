@@ -8,4 +8,4 @@ const connection = mongoose.connect(url);
 
 module.exports = connection;
 
-// mongodb://more:neko@localhost:27017
+// mongodb://more:neko@mongodb:27017
