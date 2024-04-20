@@ -6,7 +6,7 @@ const Navigation = () => {
     <>
       <Navbar appearance="subtle">
         <FlexboxGrid justify="space-between">
-          <Navbar.Brand href="#">15 de More</Navbar.Brand>
+          <Navbar.Brand href="#">15 de More 🥳</Navbar.Brand>
           <Nav>
             <Nav.Item as={Link} to="/" eventKey="2">
               Subir
