@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Row, Col } from "rsuite";
+import { Grid, Row, Col, Panel } from "rsuite";
+
+import ModalDisplay from "../components/ModalDisplay";
 
 const FileList = () => {
   const [files, setFiles] = useState([]);
@@ -23,17 +25,19 @@ const FileList = () => {
   }, []);
 
   const renderFile = (file) => {
+    const commonStyle = { maxWidth: "150px" };
+
     if (file.contentType.startsWith("image")) {
       return (
         <img
           src={`http://localhost:5000/uploads/${file.filename}`}
           alt="Uploaded file"
-          style={{ maxWidth: "100px" }}
+          style={commonStyle}
         />
       );
     } else if (file.contentType.startsWith("video")) {
       return (
-        <video controls style={{ maxWidth: "500px" }}>
+        <video controls style={commonStyle}>
           <source
             src={`http://localhost:5000/uploads/${file.filename}`}
             type={file.contentType}
@@ -53,15 +57,23 @@ const FileList = () => {
         <Row>
           {files.map((file) => (
             <Col key={file._id}>
-              <strong>Author:</strong> {file.author}
+              {/* <strong>Author:</strong> {file.author}
               <br />
               <strong>Text:</strong> {file.text}
               <br />
               <strong>Filename:</strong> {file.filename}
               <br />
               <strong>Content Type:</strong> {file.contentType}
-              <br />
-              {renderFile(file)}
+              <br /> */}
+              <div>{renderFile(file)}</div>
+              <ModalDisplay
+                text={file.text}
+                img={`http://localhost:5000/uploads/${file.filename}`}
+                author={file.author}
+                type={
+                  file.filename.split(".").pop() === "mp4" ? "video" : "photo"
+                }
+              />
             </Col>
           ))}
         </Row>

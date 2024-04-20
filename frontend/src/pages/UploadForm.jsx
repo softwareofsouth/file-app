@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Notification, Input, InputGroup, MaskedInput, Button } from "rsuite";
+import { Notification, Input, Button, FlexboxGrid, Divider } from "rsuite";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -19,6 +19,11 @@ const UploadForm = () => {
     formData.append("author", author);
     formData.append("text", text);
 
+    if (!file) {
+      alert("Por favor selecciona un archivo 🤔");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:5000/upload", formData, {
         headers: {
@@ -35,32 +40,43 @@ const UploadForm = () => {
 
   return (
     <div>
-      <h2>Comparti tu recuerdo 🤗</h2>
-
-      <form onSubmit={handleSubmit}>
-        <Input
-          as="input"
-          type="text"
-          placeholder="Nombre"
-          value={author}
-          onChange={(value) => setAuthor(value)}
-        />
-
-        <Input
-          as="textarea"
-          type="text"
-          placeholder="Mensaje"
-          value={text}
-          onChange={(value) => setText(value)}
-        />
-
-        <input type="file" onChange={handleFileChange} />
-
-        <Button appearance="primary" type="submit">
-          Subir
-        </Button>
-      </form>
-
+      <div style={{ textAlign: "center" }}>
+        <h2>Comparti tu recuerdo 🤗</h2>
+      </div>
+      <FlexboxGrid justify="center">
+        <form onSubmit={handleSubmit}>
+          <h5>Tu nombre:</h5>
+          <Input
+            as="input"
+            type="text"
+            placeholder="Nombre"
+            value={author}
+            onChange={(value) => setAuthor(value)}
+          />
+          <h5>Tu mensaje:</h5>
+          <Input
+            as="textarea"
+            type="text"
+            placeholder="Mensaje"
+            value={text}
+            onChange={(value) => setText(value)}
+          />
+          <h5>Seleciona un archivo:</h5>
+          <div style={{ textAlign: "center" }}>
+            <input
+              type="file"
+              onChange={handleFileChange}
+              style={{ margin: "1rem auto" }}
+            />
+          </div>
+          <br />
+          <div style={{ textAlign: "center" }}>
+            <Button appearance="primary" type="submit">
+              Subir
+            </Button>
+          </div>
+        </form>
+      </FlexboxGrid>
       {uploadStatus === "success" && (
         <Notification type="success" header="Operacion con Exito">
           Informacion enviada 😃👍
@@ -71,6 +87,9 @@ const UploadForm = () => {
           Error al cargar 😐
         </Notification>
       )}
+      <Divider>
+        <h2>✨✨</h2>
+      </Divider>
     </div>
   );
 };

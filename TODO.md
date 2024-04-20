@@ -1,9 +1,12 @@
-load page
-check file type
-msg
-style
-form style
-
-grid images
-modals images
-todo imput file type
+- [x] load page
+- [x] check file type
+- [x] msg
+- [x] style
+- [x] form style
+- [ ] beauty grid images
+- [x] modals images
+- [x] (cant be posible) todo imput file type
+-------------------
+ALERT
+configure PORTS
+-------------------
