@@ -24,5 +24,3 @@ COPY --from=dist /app/dist /usr/share/nginx/html
 EXPOSE 80
 # Serve the app
 CMD ["nginx", "-g", "daemon off;"]
-~                                                                                                                                                                        
-~                                              
