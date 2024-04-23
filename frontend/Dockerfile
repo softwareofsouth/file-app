@@ -1,4 +1,4 @@
-# Use node.js as the base image
+# Use node.js 18.20.1 as the base image
 FROM node:18-alpine
 # Set the working directory in the container
 WORKDIR /app
@@ -12,4 +12,4 @@ COPY . .
 # Expose the port the app runs on
 EXPOSE 8000
 # Serve the app
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "dev"]

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import api from "../api";
+import axios from "axios";
 import { Grid, Row, Col, Panel } from "rsuite";
 
 import ModalDisplay from "../components/ModalDisplay";
-const URI = `http://${import.meta.env.VITE_HOST}:${import.meta.env.VITE_PORT}`;
+const URI = import.meta.env.VITE_BACKEND_URL;
 
 const FileList = () => {
   const [files, setFiles] = useState([]);
@@ -11,7 +11,7 @@ const FileList = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await api.get("/files");
+        const response = await axios.get(URI + "/files");
         setFiles(response.data);
       } catch (error) {
         console.error("Error fetching files:", error);

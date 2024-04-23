@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import api from "../api";
+import axios from "axios";
 import { Notification, Input, Button, FlexboxGrid, Divider } from "rsuite";
+
+const URI = import.meta.env.VITE_BACKEND_URL;
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);
@@ -25,7 +27,7 @@ const UploadForm = () => {
     }
 
     try {
-      await api.post("/upload", formData, {
+      await axios.post(`${URI}/upload`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

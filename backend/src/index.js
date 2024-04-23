@@ -10,12 +10,7 @@ const connection = require("./database/connection");
 
 const app = express();
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
-);
+app.use(cors());
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 
@@ -89,5 +84,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(PORT, HOST, () => {
-  console.log("Server is running on port 5000");
+  console.log("Server is running on port " + PORT);
 });
