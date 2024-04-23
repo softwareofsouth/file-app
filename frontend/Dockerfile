@@ -5,7 +5,10 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY package*.json ./
 # Set the environment variable to the backend URL
-ENV VITE_BACKEND_URL=173.23.0.3
+ENV VITE_BACKEND_URL=backend
+#backend 
+#173.23.0.3
+#host.docker.internal
 # Install any needed packages specified in package.json
 RUN npm install
 # Copy the rest of the application code into the container at /app
@@ -21,3 +24,5 @@ COPY --from=dist /app/dist /usr/share/nginx/html
 EXPOSE 80
 # Serve the app
 CMD ["nginx", "-g", "daemon off;"]
+~                                                                                                                                                                        
+~                                              

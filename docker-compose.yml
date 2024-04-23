@@ -12,6 +12,8 @@ services:
       - backend
     networks:
       - app-network
+    extra_hosts:
+      - "backend:host-gateway"
 
   backend:
     build:
