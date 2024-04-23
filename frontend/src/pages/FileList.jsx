@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Grid, Row, Col, Panel } from "rsuite";
+import { Grid, Row, Col } from "rsuite";
 
 import ModalDisplay from "../components/ModalDisplay";
-const URI = import.meta.env.VITE_BACKEND_URL;
-
+const URI = "http://" + import.meta.env.VITE_BACKEND_URL + ":5000";
+console.log(URI);
 const FileList = () => {
   const [files, setFiles] = useState([]);
 

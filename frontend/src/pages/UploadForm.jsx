@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Notification, Input, Button, FlexboxGrid, Divider } from "rsuite";
 
-const URI = import.meta.env.VITE_BACKEND_URL;
+//const URI = import.meta.env.VITE_BACKEND_URL;
+const URI = "http://" + import.meta.env.VITE_BACKEND_URL + ":5000";
 
 const UploadForm = () => {
   const [file, setFile] = useState(null);

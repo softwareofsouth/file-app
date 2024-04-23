@@ -7,11 +7,9 @@ services:
       dockerfile: Dockerfile
     container_name: frontend
     ports:
-      - "80:8000"
+      - "8080:80"
     depends_on:
       - backend
-    env_file:
-      - ./frontend/.env
     networks:
       - app-network
 
@@ -20,14 +18,14 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     container_name: backend
-    ports:
-      - "5000:5000"
     env_file:
       - ./backend/.env
+    hostname: backend
     depends_on:
       - mongodb
     networks:
-      - app-network
+      app-network:
+        ipv4_address: 173.23.0.3
 
   mongodb:
     image: mongo:latest
@@ -47,3 +45,8 @@ volumes:
 networks:
   app-network:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.23.0.0/16
+          gateway: 173.23.0.1

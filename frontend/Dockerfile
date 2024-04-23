@@ -1,15 +1,23 @@
-# Use node.js 18.20.1 as the base image
-FROM node:18-alpine
-# Set the working directory in the container
+# Use the official Node.js runtime as the base image
+FROM node:18-alpine as dist
+# Set the working directory in the container to /app
 WORKDIR /app
-# Copy the package.json file into the container at /frontend
-COPY package.json /app
-COPY package-lock.json /app
-# Install the dependencies
+# Copy the current directory contents into the container at /app
+COPY package*.json ./
+# Set the environment variable to the backend URL
+ENV VITE_BACKEND_URL=173.23.0.3
+# Install any needed packages specified in package.json
 RUN npm install
-# Copy the rest of the application code into the container at /frontend
+# Copy the rest of the application code into the container at /app
 COPY . .
-# Expose the port the app runs on
-EXPOSE 8000
+# Build the application
+RUN npm run build
+
+# Use the official Nginx image as the base image
+FROM nginx:1.21-alpine
+# Copy the dist output to replace the default Nginx contents
+COPY --from=dist /app/dist /usr/share/nginx/html
+# Expose the port the app runs in
+EXPOSE 80
 # Serve the app
-CMD ["npm", "run", "dev"]
+CMD ["nginx", "-g", "daemon off;"]
