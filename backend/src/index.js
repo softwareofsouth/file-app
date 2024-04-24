@@ -10,7 +10,11 @@ const connection = require("./database/connection");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "http://54.159.179.244:8080",
+  })
+);
 const PORT = process.env.PORT;
 const HOST = process.env.HOST;
 

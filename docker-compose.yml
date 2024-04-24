@@ -16,12 +16,14 @@ services:
       - "host.docker.internal:host-gateway"
 
   backend:
+    container_name: backend
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: backend
     env_file:
       - ./backend/.env
+    ports:
+      - "5000:5000"
     hostname: backend
     depends_on:
       - mongodb

@@ -12,10 +12,10 @@ function App() {
   return (
     <Router>
       <Navigation />
-      <GetIndex />
       <Routes>
-        <Route path="/" element={<UploadForm />} />
+        <Route path="/" element={<GetIndex />} />
         <Route path="/files" element={<FileList />} />
+        <Route path="/upload" element={<UploadForm />} />
       </Routes>
     </Router>
   );

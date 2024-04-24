@@ -6,7 +6,9 @@ const GetIndex = () => {
   useEffect(() => {
     const fetchIndex = async () => {
       try {
-        const res = await fetch("http://173.23.0.3:5000/");
+        const res = await fetch(
+          "http://" + import.meta.env.VITE_BACKEND_URL + ":5000"
+        );
         if (!res.ok) {
           throw new Error("Network response was not ok");
         }
