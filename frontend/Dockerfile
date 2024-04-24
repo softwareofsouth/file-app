@@ -5,7 +5,7 @@ WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY package*.json ./
 # Set the environment variable to the backend URL
-ENV VITE_BACKEND_URL=backend
+ENV VITE_BACKEND_URL=173.23.0.3
 #backend 
 #173.23.0.3
 #host.docker.internal

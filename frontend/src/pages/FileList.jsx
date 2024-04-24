@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import api from "../api";
 import { Grid, Row, Col } from "rsuite";
 
 import ModalDisplay from "../components/ModalDisplay";
@@ -11,7 +11,7 @@ const FileList = () => {
   useEffect(() => {
     const fetchFiles = async () => {
       try {
-        const response = await axios.get(URI + "/files");
+        const response = await api.get("/files");
         setFiles(response.data);
       } catch (error) {
         console.error("Error fetching files:", error);

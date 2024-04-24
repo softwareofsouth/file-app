@@ -78,9 +78,9 @@ app.get("/files", async (req, res) => {
   }
 });
 
-// index page, hello world
+// index page return json messaje hello world
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.json({ message: "Hello World" });
 });
 
 app.listen(PORT, HOST, () => {
