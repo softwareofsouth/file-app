@@ -2,12 +2,12 @@ let config;
 
 if (process.env.NODE_ENV === "production") {
   config = {
-    clientUri: process.env.CLIENT_URI,
+    clientUri: [process.env.CLIENT_URI_1, process.env.CLIENT_URI_2],
     mongoStr: `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@${process.env.MONGO_INITDB_HOST}:27017`,
   };
 } else {
   config = {
-    clientUri: "http://localhost:5173",
+    clientUri: ["http://localhost:5173"],
     mongoStr: `mongodb://${process.env.MONGO_INITDB_ROOT_USERNAME}:${process.env.MONGO_INITDB_ROOT_PASSWORD}@localhost:27017`,
   };
 }

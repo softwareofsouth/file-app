@@ -4,7 +4,6 @@ import { Grid, Row, Col } from "rsuite";
 
 import ModalDisplay from "../components/ModalDisplay";
 const URI = import.meta.env.VITE_BACKEND_URL;
-console.log(URI);
 const FileList = () => {
   const [files, setFiles] = useState([]);
 

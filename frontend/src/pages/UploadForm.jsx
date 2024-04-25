@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import api from "../api";
 import { Notification, Input, Button, FlexboxGrid, Divider } from "rsuite";
 
-console.log(import.meta.env.VITE_BACKEND_URL);
-
 const UploadForm = () => {
   const [file, setFile] = useState(null);
   const [author, setAuthor] = useState("");
