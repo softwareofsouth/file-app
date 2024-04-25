@@ -8,10 +8,7 @@ const Navigation = () => {
         <FlexboxGrid justify="space-between">
           <Navbar.Brand href="#">15 de More 🥳</Navbar.Brand>
           <Nav>
-            <Nav.Item as={Link} to="/" eventKey="4">
-              Index
-            </Nav.Item>
-            <Nav.Item as={Link} to="/upload" eventKey="2">
+            <Nav.Item as={Link} to="/" eventKey="2">
               Subir
             </Nav.Item>
             <Nav.Item as={Link} to="/files" eventKey="3">

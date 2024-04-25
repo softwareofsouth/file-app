@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
-// set var
-const user = process.env.MONGO_INITDB_ROOT_USERNAME;
-const password = process.env.MONGO_INITDB_ROOT_PASSWORD;
-const port = process.env.MONGO_INITDB_PORT;
-console.log(port)
-const url = `mongodb://${user}:${password}@${port}:27017`;
-// connect to the database
-const connection = mongoose.connect(url);
+const config = require("../config");
+console.log(config.mongoStr);
+
+const connection = mongoose
+  .connect(config.mongoStr)
+  .then(() => {
+    console.log("Connected to the database");
+  })
+  .catch((err) => {
+    console.log("Error connecting to the database", err);
+  });
 
 module.exports = connection;
-
-//`mongodb://${user}:${password}@${host}:${port}/${db}`

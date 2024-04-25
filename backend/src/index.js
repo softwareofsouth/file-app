@@ -6,26 +6,21 @@ const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
 
+const config = require("./config");
 const connection = require("./database/connection");
-
+// setup express
 const app = express();
+// accept json data
 app.use(express.json());
+// cors configuration
 app.use(
   cors({
-    origin: "http://54.159.179.244:8080",
+    origin: config.clientUri,
   })
 );
-const PORT = process.env.PORT;
-const HOST = process.env.HOST;
-
-connection
-  .then(() => {
-    console.log("Connected to the database");
-  })
-  .catch((err) => {
-    console.log("Error connecting to the database", err);
-  });
-
+// db connection
+connection;
+// multer configuration
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     const uploadDir = "uploads/";
@@ -37,9 +32,9 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + Date.now() + ext);
   },
 });
-
+// upload middleware
 const upload = multer({ storage });
-
+// file schema model
 const FileSchema = new mongoose.Schema({
   author: String,
   text: String,
@@ -47,18 +42,16 @@ const FileSchema = new mongoose.Schema({
   path: String,
   contentType: String,
 });
-
 const File = mongoose.model("File", FileSchema);
-
+// routes upload
 app.use("/uploads", express.static("uploads"));
-
 app.post("/upload", upload.single("file"), async (req, res) => {
   const { author, text } = req.body;
   const file = req.file;
   if (!file) {
     return res.status(400).send("Please upload a file");
   }
-
+  // save file to database
   const newFile = new File({
     author,
     text,
@@ -66,12 +59,12 @@ app.post("/upload", upload.single("file"), async (req, res) => {
     path: file.path,
     contentType: file.mimetype,
   });
-
+  //save file to database
   await newFile.save();
   console.log("File uploaded successfully \n", newFile);
   res.send("File uploaded successfully");
 });
-
+// routes send files
 app.get("/files", async (req, res) => {
   try {
     const files = await File.find();
@@ -81,12 +74,11 @@ app.get("/files", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-
-// index page return json messaje hello world
-app.get("/", (req, res) => {
-  res.json({ message: "Hello World" });
+// check server
+app.get("/check", (req, res) => {
+  res.json({ message: "Serve is working =D" });
 });
-
-app.listen(PORT, HOST, () => {
-  console.log("Server is running on port " + PORT);
+// start server
+app.listen(5000, () => {
+  console.log("Server is running on port " + 5000);
 });

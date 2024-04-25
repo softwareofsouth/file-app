@@ -1,5 +1,5 @@
-run-dev:
-	cd backend && npm run start &
+dev:
+	cd backend && npm run dev &
 	cd frontend && npm run dev
 
 docker-up:

@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 import UploadForm from "./pages/UploadForm";
 import FileList from "./pages/FileList";
+import Check from "./pages/Check";
 import Navigation from "./components/Navigation";
-import GetIndex from "./pages/GetIndex";
 
 import "./app.css";
 
@@ -13,9 +13,10 @@ function App() {
     <Router>
       <Navigation />
       <Routes>
-        <Route path="/" element={<GetIndex />} />
+        <Route path="/" element={<UploadForm />} />
         <Route path="/files" element={<FileList />} />
-        <Route path="/upload" element={<UploadForm />} />
+        <Route path="/check" element={<Check />} />
+        <Route path="*" element={<h1>Page dont Found</h1>} />
       </Routes>
     </Router>
   );
