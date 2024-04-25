@@ -18,14 +18,14 @@ FFmpeg to optimize VIDEO
 
 # to use you need set .env
 
-in frontend/.env.local
-VITE_BACKEND_URL=
+in frontend/.env.local   
+VITE_BACKEND_URL=   
 
 in backend/.env
-MONGO_INITDB_ROOT_USERNAME=
-MONGO_INITDB_ROOT_PASSWORD=
-MONGO_INITDB_HOST=
-CLIENT_URI=
+MONGO_INITDB_ROOT_USERNAME=   
+MONGO_INITDB_ROOT_PASSWORD=   
+MONGO_INITDB_HOST=   
+CLIENT_URI=   
 
-set env enviroment
+set env enviroment   
 `export NODE_ENV=development or production`
