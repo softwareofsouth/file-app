@@ -4,11 +4,6 @@ FROM node:18-alpine as dist
 WORKDIR /app
 # Copy the current directory contents into the container at /app
 COPY package*.json ./
-# Set the environment variable to the backend URL
-ENV VITE_BACKEND_URL=54.159.179.244
-#backend 
-#173.23.0.3
-#host.docker.internal
 # Install any needed packages specified in package.json
 RUN npm install
 # Copy the rest of the application code into the container at /app
