@@ -5,6 +5,7 @@ import UploadForm from "./pages/UploadForm";
 import FileList from "./pages/FileList";
 import Check from "./pages/Check";
 import Navigation from "./components/Navigation";
+import DownloadAll from "./pages/DownloadAll";
 //import FooterBar from "./components/FooterBar";
 
 import "./app.css";
@@ -17,6 +18,7 @@ function App() {
         <Route path="/" element={<UploadForm />} />
         <Route path="/files" element={<FileList />} />
         <Route path="/check" element={<Check />} />
+        <Route path="/download" element={<DownloadAll />} />
         <Route path="*" element={<h1>Page dont Found</h1>} />
       </Routes>
       {/* <FooterBar /> */}

@@ -6,6 +6,8 @@ const fs = require("fs");
 const path = require("path");
 const mongoose = require("mongoose");
 
+const archiver = require("archiver");
+
 const config = require("./config");
 const connection = require("./database/connection");
 // setup express
@@ -74,6 +76,30 @@ app.get("/files", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+
+app.get("/download/all", async (req, res) => {
+  try {
+    const files = await File.find();
+
+    const archive = archiver("zip", {
+      zlib: { level: 9 }, // set compression level
+    });
+
+    res.attachment("files.zip"); // set the file name for the client to download
+
+    archive.pipe(res);
+
+    files.forEach((file) => {
+      archive.append(fs.createReadStream(file.path), { name: file.filename });
+    });
+
+    archive.finalize();
+  } catch (err) {
+    console.error("Error downloading files:", err);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // check server
 app.get("/check", (req, res) => {
   res.json({ message: "Serve is working =D" });
